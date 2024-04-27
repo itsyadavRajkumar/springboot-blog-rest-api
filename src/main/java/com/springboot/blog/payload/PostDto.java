@@ -32,6 +32,4 @@ public class PostDto {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	
 }
