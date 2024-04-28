@@ -3,11 +3,14 @@ package com.springboot.blog.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.springboot.blog.entity.Post;
 import com.springboot.blog.exception.ResourceNotFoundException;
 import com.springboot.blog.payload.PostDto;
+import com.springboot.blog.payload.PostResponce;
 import com.springboot.blog.repository.PostRepository;
 import com.springboot.blog.service.PostService;
 
@@ -44,11 +47,32 @@ public class PostServiceImpl implements PostService {
 	}
 
 	@Override
-	public List<PostDto> getAllPosts() {
+//	public List<PostDto> getAllPosts() {
+//	public List<PostDto> getAllPosts(int pageNo, int pageSize) {
+	public PostResponce getAllPosts(int pageNo, int pageSize) {
 		// TODO Auto-generated method stub
 		
-		List<Post> posts = postRepository.findAll();
-		return posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+//		create pageable instance
+		PageRequest pageable = PageRequest.of(pageNo, pageSize);
+		
+//		List<Post> posts = postRepository.findAll();
+		Page<Post> posts = postRepository.findAll(pageable);
+		
+//		get content for page object
+		List<Post> listOfPosts = posts.getContent();
+		
+//		return posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+//		return listOfPosts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+		List<PostDto> content = listOfPosts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+		PostResponce postResponce = new PostResponce();
+		postResponce.setContent(content);
+		postResponce.setPageNo(posts.getNumber());
+		postResponce.setPageSize(posts.getSize());
+		postResponce.setTotalElements(posts.getTotalElements());
+		postResponce.setTotalPages(posts.getTotalPages());
+		postResponce.setLast(posts.isLast());
+		
+		return postResponce;
 	}
 	
 	private PostDto mapToDTO(Post post) {
@@ -67,5 +91,29 @@ public class PostServiceImpl implements PostService {
 		Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
 		return mapToDTO(post);
 	}
+
+	@Override
+	public PostDto updatePost(PostDto postDto, long id) {
+		// TODO Auto-generated method stub
+//		get post by id from  the database
+		Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+		
+		post.setTitle(postDto.getTitle());
+		post.setContent(postDto.getContent());
+		post.setDescription(postDto.getDescription());
+		
+		Post updatedPost = postRepository.save(post);
+		
+		return mapToDTO(updatedPost);
+	}
+
+	@Override
+	public void deletePostById(long id) {
+		// TODO Auto-generated method stub
+		Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+		postRepository.delete(post);
+	}
+
+	
 
 }
