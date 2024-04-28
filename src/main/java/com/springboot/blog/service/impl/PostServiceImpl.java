@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.springboot.blog.entity.Post;
@@ -49,11 +50,24 @@ public class PostServiceImpl implements PostService {
 	@Override
 //	public List<PostDto> getAllPosts() {
 //	public List<PostDto> getAllPosts(int pageNo, int pageSize) {
-	public PostResponce getAllPosts(int pageNo, int pageSize) {
+//	public PostResponce getAllPosts(int pageNo, int pageSize) {
+//	public PostResponce getAllPosts(int pageNo, int pageSize, String sortBy) {
+	public PostResponce getAllPosts(int pageNo, int pageSize, String sortBy, String sortDir) {
 		// TODO Auto-generated method stub
 		
 //		create pageable instance
-		PageRequest pageable = PageRequest.of(pageNo, pageSize);
+//		PageRequest pageable = PageRequest.of(pageNo, pageSize);
+		
+		
+		/*
+//		For Ascending Order
+		PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+//		For Descending Order
+//		PageRequest pageable = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+		*/
+		
+		Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+		PageRequest pageable = PageRequest.of(pageNo, pageSize, sort);
 		
 //		List<Post> posts = postRepository.findAll();
 		Page<Post> posts = postRepository.findAll(pageable);

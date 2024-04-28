@@ -1,7 +1,5 @@
 package com.springboot.blog.controller;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,12 +46,29 @@ public class PostController {
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
 	)
 	*/
+	/*
 	public PostResponce getAllPosts(
 			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
+	) 
+	*/
+	/*
+	public PostResponce getAllPosts(
+			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+			@RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy
+	)
+	*/
+	public PostResponce getAllPosts(
+			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
+			@RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy,
+			@RequestParam(value = "sortDir", defaultValue = "id", required = false) String sortDir
 	) {
 //		return postService.getAllPosts();
-		return postService.getAllPosts(pageNo, pageSize);
+//		return postService.getAllPosts(pageNo, pageSize);
+//		return postService.getAllPosts(pageNo, pageSize, sortBy);
+		return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
 	}
 	
 //	get post by id
