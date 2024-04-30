@@ -33,20 +33,22 @@ public class PostServiceImpl implements PostService {
 	public PostDto createPost(PostDto postDto) {
 		// TODO Auto-generated method stub
 //		convert DTO Entity
-		
-		Post post = new Post();
-		post.setTitle(postDto.getTitle());
-		post.setDescription(postDto.getDescription());
-		post.setContent(postDto.getContent());
+		Post post = mapToEntity(postDto);
+
+//		Post post = new Post();
+//		post.setTitle(postDto.getTitle());
+//		post.setDescription(postDto.getDescription());
+//		post.setContent(postDto.getContent());
 		
 		Post newPost = postRepository.save(post);
 		
 //		convert entity to DTO
-		PostDto postResponse = new PostDto();
-		postResponse.setId(newPost.getId());
-		postResponse.setTitle(newPost.getTitle());
-		postResponse.setDescription(newPost.getDescription());
-		postResponse.setContent(newPost.getContent());
+		PostDto postResponse = mapToDTO(newPost);
+//		PostDto postResponse = new PostDto();
+//		postResponse.setId(newPost.getId());
+//		postResponse.setTitle(newPost.getTitle());
+//		postResponse.setDescription(newPost.getDescription());
+//		postResponse.setContent(newPost.getContent());
 		
 		return postResponse;
 	}
@@ -82,6 +84,7 @@ public class PostServiceImpl implements PostService {
 //		return posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
 //		return listOfPosts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
 		List<PostDto> content = listOfPosts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+		
 		PostResponce postResponce = new PostResponce();
 		postResponce.setContent(content);
 		postResponce.setPageNo(posts.getNumber());
@@ -142,10 +145,7 @@ public class PostServiceImpl implements PostService {
 	private Post mapToEntity(PostDto postDto) {
 		Post post = mapper.map(postDto, Post.class);
 		
-//		Post post = new Post();
-//		post.setTitle(postDto.getTitle());
-//		post.setDescription(postDto.getDescription());
-//		post.setContent(postDto.getContent());
+//		Post post = tent(postDto.getContent());
 		
 		return post;
 	}
