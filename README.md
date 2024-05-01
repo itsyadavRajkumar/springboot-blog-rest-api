@@ -1,37 +1,25 @@
-Tools and Technologies used in this course:
+**Technologies:**
+1)	Java
+2)	Spring Boot
+3)	Spring MVC
+4)	Spring Data JPA (Hibernate)
+5)	Spring Security
+6)	JWT
+7)	Tomcat
 
-Technologies:
+**IDE:**
 
-Java
+•	Eclipse
 
-Spring Boot
+**Database:**
 
-Spring MVC
+•	MySQL database
 
-Spring Data JPA ( Hibernate)
+**Tools:**
+1)	Swagger - API documentation
+2)	Postman - Test REST API
+3)	Maven - Build Tool
 
-Spring Security
+**Deployment on Production:**
 
-JWT
-
-Tomcat
-
-IDE:
-
-Eclipse
-
-Database:
-
-MySQL database
-
-Tools:
-
-Swagger - API documentation
-
-Postman - Test REST API
-
-Maven - Build Tool
-
-Deployment on Production:
-
-AWS
+•	AWS
