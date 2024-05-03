@@ -17,6 +17,8 @@ import com.springboot.blog.payload.PostResponce;
 import com.springboot.blog.service.PostService;
 import com.springboot.blog.utils.AppConstants;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
@@ -29,8 +31,14 @@ public class PostController {
 	}
 	
 //	create blog post rest api
+	/*
 	@PostMapping
 	public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {
+		return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
+	}
+	*/
+	@PostMapping
+	public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
 		return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
 	}
 	
