@@ -51,14 +51,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		// TODO Auto-generated method stub
 		Map<String, String> errors = new HashMap<>();
 		ex.getBindingResult().getAllErrors().forEach((error) -> {
-			String FieldName = ((FieldError)error).getField();
+			String FieldName = ((FieldError) error).getField();
 			String message = error.getDefaultMessage();
 			errors.put(FieldName, message);
 		});
-		
+
 		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 	}
-	
+
 //	handle specific exceptions
 //	@ExceptionHandler(MethodArgumentNotValidException.class)
 //	public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException exception,
@@ -72,7 +72,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 //		
 //		return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 //	}
-	
+
 	@ExceptionHandler(AccessDeniedException.class)
 	public ResponseEntity<ErrorDetails> handleAccessDeniedException(AccessDeniedException exception,
 			WebRequest webRequest) {

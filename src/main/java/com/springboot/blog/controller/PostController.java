@@ -23,71 +23,79 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/posts")
 public class PostController {
-	
+
 	private PostService postService;
 
 	public PostController(PostService postService) {
 //		super();
 		this.postService = postService;
 	}
-	
+
 //	create blog post rest api
 	/*
-	@PostMapping
-	public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {
-		return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
-	}
-	*/
+	 * @PostMapping public ResponseEntity<PostDto> createPost(@RequestBody PostDto
+	 * postDto) { return new ResponseEntity<>(postService.createPost(postDto),
+	 * HttpStatus.CREATED); }
+	 */
 	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto) {
 		return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
 	}
-	
+
 //	get all post by api
 	@GetMapping
 	/*
-	public List<PostDto> getAllPosts() {
-		return postService.getAllPosts();
-	}
-	*/
+	 * public List<PostDto> getAllPosts() { return postService.getAllPosts(); }
+	 */
 //	Using Pagination
-/*	public List<PostDto> getAllPosts(
-			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
-	)
-	*/
 	/*
-	public PostResponce getAllPosts(
-			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize
-	) 
-	*/
+	 * public List<PostDto> getAllPosts(
+	 * 
+	 * @RequestParam(value = "pageNo", defaultValue = "0", required = false) int
+	 * pageNo,
+	 * 
+	 * @RequestParam(value = "pageSize", defaultValue = "10", required = false) int
+	 * pageSize )
+	 */
 	/*
-	public PostResponce getAllPosts(
-			@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize,
-			@RequestParam(value = "sortBy", defaultValue = "id", required = false) String sortBy
-	)
-	*/
+	 * public PostResponce getAllPosts(
+	 * 
+	 * @RequestParam(value = "pageNo", defaultValue = "0", required = false) int
+	 * pageNo,
+	 * 
+	 * @RequestParam(value = "pageSize", defaultValue = "10", required = false) int
+	 * pageSize )
+	 */
+	/*
+	 * public PostResponce getAllPosts(
+	 * 
+	 * @RequestParam(value = "pageNo", defaultValue = "0", required = false) int
+	 * pageNo,
+	 * 
+	 * @RequestParam(value = "pageSize", defaultValue = "10", required = false) int
+	 * pageSize,
+	 * 
+	 * @RequestParam(value = "sortBy", defaultValue = "id", required = false) String
+	 * sortBy )
+	 */
 	public PostResponce getAllPosts(
 			@RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
 			@RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
 			@RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY, required = false) String sortBy,
-			@RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir
-	) {
+			@RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir) {
 //		return postService.getAllPosts();
 //		return postService.getAllPosts(pageNo, pageSize);
 //		return postService.getAllPosts(pageNo, pageSize, sortBy);
 		return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
 	}
-	
+
 //	get post by id
 	@GetMapping("/{id}")
 	public ResponseEntity<PostDto> getPostById(@PathVariable(name = "id") long id) {
 		return ResponseEntity.ok(postService.getPostById(id));
 	}
-	
+
 //	update post by id rest api
 	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
@@ -95,7 +103,7 @@ public class PostController {
 		PostDto postResponce = postService.updatePost(postDto, id);
 		return new ResponseEntity<>(postResponce, HttpStatus.OK);
 	}
-	
+
 //	delete post by id rest api
 	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
